@@ -5,19 +5,24 @@ feature 'Admin Login' do
     visit '/'
   end
 
-  scenario 'Fill in login form', js: true do
-    fill_in 'username', with: 'admin'
-    fill_in 'password', with: 'admin'
-    click_on 'Log in'
+  scenario 'Fill in login form with valid parametres', js: true do
+    login 'admin', 'admin'
 
     page.should have_content('My profile')
+
     click_on 'My profile'
 
-    click_on 'Log out'
-
-    #Закрываем диалог подтверждения выхода.
-    page.driver.browser.switch_to.alert.accept
-
+    logout
     page.should_not have_content('My profile')
+  end
+
+  scenario 'Fill in login form with uncorrect password', js: true do
+    login 'admin', 'admin3'
+    page.should have_content('Incorrect user name or password')
+  end
+
+  scenario 'Fill in login form with uncorrect User name', js: true do
+    login 'Santa', 'admin'
+    page.should have_content('Incorrect user name or password')
   end
 end

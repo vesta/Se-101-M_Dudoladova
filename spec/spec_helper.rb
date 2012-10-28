@@ -1,6 +1,7 @@
 require 'capybara/rspec'
 #require 'capybara/firebug'
 #require 'active_support/core_ext'
+require 'support/login_page'
 
 browser = (ENV['BROWSER'] || :firefox).to_sym
 
